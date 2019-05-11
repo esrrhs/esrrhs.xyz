@@ -27,9 +27,11 @@
 	<script>
 	$(document).ready(function(){
 	  $("#cal").click(function(){
-		$.get("http://wechat.esrrhs.xyz/texas?hand=%E9%BB%91A,%E7%BA%A2K&pub=%E9%BB%913,%E9%BB%914",function(data,status){
-            alert("数据: " + data + "\n状态: " + status);//success
-        });
+		fetch("http://wechat.esrrhs.xyz/texas?hand=黑A,红K&pub=黑3,黑4").then(function (response) {
+				return response.json();
+			}).then(function (json) {
+				alert(json);
+			});
 	  });
 	});
 	</script>
