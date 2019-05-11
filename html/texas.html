@@ -27,10 +27,14 @@
 	<script>
 	$(document).ready(function(){
 	  $("#cal").click(function(){
-		fetch("http://wechat.esrrhs.xyz/texas?hand=黑A,红K&pub=黑3,黑4").then(function (response) {
+	  
+		var hand = $("#inputHand").val()
+		var pub = $("#inputPub").val()
+		
+		fetch("http://wechat.esrrhs.xyz/texas?hand="+hand+"&pub="+pub).then(function (response) {
 				return response.json();
 			}).then(function (json) {
-				alert(json);
+				$("#output").text(json["data"]);
 			});
 	  });
 	});
@@ -47,13 +51,27 @@
     <div class="container">
 
       <form class="form-signin">
-        <h2 class="form-signin-heading">输入牌</h2>
-        <label for="inputHand" class="sr-only">手牌</label>
-        <input type="hand" id="inputHand" class="form-control" placeholder="手牌：如黑A,红2" required autofocus>
-        <label for="inputPub" class="sr-only">公牌</label>
-        <input type="pub" id="inputPub" class="form-control" placeholder="公牌：如梅Q,方10,鬼  可以留空" required>
-        <button id="cal" class="btn btn-lg btn-primary btn-block" type="submit">计算</button>
+        <h2 class="form-signin-heading">德州扑克胜率计算</h2>
+		<ul class="list-inline">
+		<li><h2><span class="label label-default">手牌</span></h2></li>
+        <li><label for="inputHand" class="sr-only">手牌</label>
+        <input type="hand" id="inputHand" class="form-control" placeholder="手牌：如黑A,红2" value="黑A,红10" required autofocus>
+		</li></ul>
+				
+		<ul class="list-inline">
+		<li><h2><span class="label label-default">公牌</span></h2></li>
+		<li><label for="inputPub" class="sr-only">公牌</label>
+        <input type="pub" id="inputPub" class="form-control" placeholder="公牌：如梅Q,方10,鬼  可以留空" value="梅2,方Q,方A" required>
+        </li></ul>
+		
+		<button id="cal" type="button" class="btn btn-primary btn-lg btn-block">计算</button>
+		
+		<ul class="list-inline">
+			<li><h2><span class="label label-default">输出</span></h2></li>
+			<li><h2 id="output"></h2></li>
+		</ul>
       </form>
+	  
 
     </div> <!-- /container -->
 
