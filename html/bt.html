@@ -34,13 +34,24 @@ var _hmt = _hmt || [];
     <!--[if lt IE 9]><script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="assets/js/ie-emulation-modes-warning.js"></script>
 	<script src="jquery.min.js"></script>
-	<script src="bootstrap-table.js"></script>
+	<script src="dist/js/bootstrap.min.js"></script>
+	<script src="dist/js/bootstrap-table.min.js"></script>
+	<script src="dist/js/bootstrap-table-zh-CN.min.js"></script>
+
 	<script>
 	$(document).ready(function(){
 	  $("#cal").click(function(){
 	  
 		var name = $("#inputName").val()
-		$('#table').bootstrapTable({});
+
+		$('#table').bootstrapTable({
+					striped : true, //是否显示行间隔色
+					pageNumber : 1, //初始化加载第一页
+					pagination : true,//是否分页
+					sidePagination : 'client',//server:服务器端分页|client：前端分页
+					pageSize : 10,//单页记录数
+					pageList : [ 5, 10, 20, 30 ],//可选择单页记录数
+				});
 		$('#table').bootstrapTable("load", []);
 		
 		fetch("http://ali.esrrhs.xyz/dht?name="+name).then(function (response) {
@@ -49,10 +60,10 @@ var _hmt = _hmt || [];
 				var data = json["data"];
 				var d = $.parseJSON(data);
 				
-				$('#table').bootstrapTable({});
 				$('#table').bootstrapTable("load", d);
 			});
 	  });
+	
 	});
 	</script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
