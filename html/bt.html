@@ -40,6 +40,7 @@ var _hmt = _hmt || [];
 	  $("#cal").click(function(){
 	  
 		var name = $("#inputName").val()
+		$('#table').bootstrapTable({});
 		
 		fetch("http://ali.esrrhs.xyz/dht?name="+name).then(function (response) {
 				return response.json();
