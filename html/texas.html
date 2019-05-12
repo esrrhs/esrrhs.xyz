@@ -43,7 +43,9 @@ var _hmt = _hmt || [];
 		fetch("http://wechat.esrrhs.xyz/texas?hand="+hand+"&pub="+pub).then(function (response) {
 				return response.json();
 			}).then(function (json) {
-				$("#output").text(json["data"]);
+				var data = json["data"];
+				
+				$("#output").text(data["probability"]);
 			});
 	  });
 	});
