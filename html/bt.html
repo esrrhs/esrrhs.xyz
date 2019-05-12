@@ -41,6 +41,7 @@ var _hmt = _hmt || [];
 	  
 		var name = $("#inputName").val()
 		$('#table').bootstrapTable({});
+		$('#table').bootstrapTable("load", []);
 		
 		fetch("http://ali.esrrhs.xyz/dht?name="+name).then(function (response) {
 				return response.json();
