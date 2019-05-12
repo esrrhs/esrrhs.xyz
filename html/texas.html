@@ -44,8 +44,10 @@ var _hmt = _hmt || [];
 				return response.json();
 			}).then(function (json) {
 				var data = json["data"];
-				
-				$("#output").text(data["probability"]);
+				var d = $.parseJSON(data);
+				$("#pro").text(d["probability"]);
+				$("#max").text(d["max"]);
+				$("#maxtype").text(d["type"]);
 			});
 	  });
 	});
@@ -62,7 +64,7 @@ var _hmt = _hmt || [];
     <div class="container">
 
       <form class="form-signin">
-        <h2 class="form-signin-heading">德州扑克胜率计算</h2>
+        <h2 class="form-signin-heading">德州扑克计算器</h2>
 		<ul class="list-inline">
 		<li><h2><span class="label label-default">手牌</span></h2></li>
         <li><label for="inputHand" class="sr-only">手牌</label>
@@ -76,10 +78,19 @@ var _hmt = _hmt || [];
         </li></ul>
 		
 		<button id="cal" type="button" class="btn btn-primary btn-lg btn-block">计算</button>
-		
+		<ul class="list-unstyled">
 		<ul class="list-inline">
-			<li><h2><span class="label label-default">输出</span></h2></li>
-			<li><h2 id="output"></h2></li>
+			<li><h3><span class="label label-default">胜率</span></h3></li>
+			<li><h3 id="pro"></h3></li>
+		</ul>
+		<ul class="list-inline">
+			<li><h3><span class="label label-default">最大牌</span></h3></li>
+			<li><h4 id="max"></h4></li>
+		</ul>
+		<ul class="list-inline">
+			<li><h3><span class="label label-default">牌型</span></h3></li>
+			<li><h3 id="maxtype"></h3></li>
+		</ul>
 		</ul>
       </form>
 	  
