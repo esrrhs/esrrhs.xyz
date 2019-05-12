@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?08be2524e25f77c0fc3587ba24a3e252";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+	
+    <title>BT搜索</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="dist/css/bootstrap-table.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="texas.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="assets/js/ie-emulation-modes-warning.js"></script>
+	<script src="jquery.min.js"></script>
+	<script src="bootstrap-table.js"></script>
+	<script>
+	$(document).ready(function(){
+	  $("#cal").click(function(){
+	  
+		var name = $("#inputName").val()
+		
+		fetch("http://ali.esrrhs.xyz/dht?name="+name).then(function (response) {
+				return response.json();
+			}).then(function (json) {
+				var data = json["data"];
+				var d = $.parseJSON(data);
+				
+				$('#table').bootstrapTable({});
+				$('#table').bootstrapTable("load", d);
+			});
+	  });
+	});
+	</script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <form class="form-signin">
+        <h1 class="form-signin-heading">BT搜索</h1>
+		<ul class="list-inline">
+		<li><h2><span class="label label-default">输入</span></h2></li>
+        <li><label for="inputName" class="sr-only">输入</label>
+        <input type="name" id="inputName" class="form-control" placeholder="输入搜索词 空格分割" value="" required autofocus>
+		</li></ul>
+						
+		<button id="cal" type="button" class="btn btn-primary btn-lg btn-block">搜索</button>
+		
+      </form>
+	  
+        <table class="table" id="table">
+            <thead>
+                <tr>
+                    <th data-field="infohash">InfoHash</th>
+                    <th data-field="name">Name</th>
+                </tr>
+            </thead>
+        </table>
+
+    </div> <!-- /container -->
+
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
