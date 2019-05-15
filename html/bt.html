@@ -52,7 +52,7 @@ var _hmt = _hmt || [];
 					pageSize : 10,//单页记录数
 					pageList : [ 5, 10, 20, 30 ],//可选择单页记录数
 				});
-		$('#table').bootstrapTable("load", []);
+		$('#table').bootstrapTable("load", [{"infohash":"加载中......","name":"加载中......"}]);
 		
 		fetch("http://ali.esrrhs.xyz/dht?name="+name).then(function (response) {
 				return response.json();
