@@ -57,7 +57,7 @@ var _hmt = _hmt || [];
 				var d = $.parseJSON(data);
 				
 				$('#table').bootstrapTable("load", d["info"]);
-				$("#total").text(d["n"]);
+				$("#total").text("种子数 : "+d["n"]);
 			});
 			
 	  $("#cal").click(function(){
@@ -73,7 +73,7 @@ var _hmt = _hmt || [];
 				var d = $.parseJSON(data);
 				
 				$('#table').bootstrapTable("load", d["info"]);
-				$("#total").text(d["n"]);
+				$("#total").text("种子数 : "+d["n"]);
 			});
 	  });
 	
