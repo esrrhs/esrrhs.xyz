@@ -72,7 +72,15 @@ var _hmt = _hmt || [];
 				var data = json["data"];
 				var d = $.parseJSON(data);
 				
-				$('#table').bootstrapTable("load", d["info"]);
+				if (d["info"] == null)
+				{
+					$('#table').bootstrapTable("load", []);
+				}
+				else
+				{
+					$('#table').bootstrapTable("load", d["info"]);
+				}
+				
 				$("#total").text("链接数 : "+d["n"]);
 			});
 	  });
