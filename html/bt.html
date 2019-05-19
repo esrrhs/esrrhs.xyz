@@ -41,25 +41,31 @@ var _hmt = _hmt || [];
 	<script>
 	$(document).ready(function(){
 	
-		$('#table').bootstrapTable({
-					striped : true, //是否显示行间隔色
-					pageNumber : 1, //初始化加载第一页
-					pagination : true,//是否分页
-					sidePagination : 'client',//server:服务器端分页|client：前端分页
-					pageSize : 10,//单页记录数
-					pageList : [ 5, 10, 20, 30 ],//可选择单页记录数
+		function clock()
+		{
+			$('#table').bootstrapTable({
+						striped : true, //是否显示行间隔色
+						pageNumber : 1, //初始化加载第一页
+						pagination : true,//是否分页
+						sidePagination : 'client',//server:服务器端分页|client：前端分页
+						pageSize : 10,//单页记录数
+						pageList : [ 5, 10, 20, 30 ],//可选择单页记录数
+					});
+					
+			fetch("http://ali.esrrhs.xyz/dhtlast").then(function (response) {
+					return response.json();
+				}).then(function (json) {
+					var data = json["data"];
+					var d = $.parseJSON(data);
+					
+					$('#table').bootstrapTable("load", d["info"]);
+					$("#total").text("种子数 : "+d["n"]);
 				});
-				
-		fetch("http://ali.esrrhs.xyz/dhtlast").then(function (response) {
-				return response.json();
-			}).then(function (json) {
-				var data = json["data"];
-				var d = $.parseJSON(data);
-				
-				$('#table').bootstrapTable("load", d["info"]);
-				$("#total").text("种子数 : "+d["n"]);
-			});
-			
+		}
+		
+		var int=window.setInterval(clock, 2000);
+		clock();
+		
 	  $("#cal").click(function(){
 	  
 		var name = $("#inputName").val()
