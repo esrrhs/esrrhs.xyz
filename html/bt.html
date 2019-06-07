@@ -34,12 +34,31 @@ var _hmt = _hmt || [];
     <!--[if lt IE 9]><script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="assets/js/ie-emulation-modes-warning.js"></script>
 	<script src="jquery.min.js"></script>
+	<script src="pako.min.js"></script>
 	<script src="dist/js/bootstrap.min.js"></script>
 	<script src="dist/js/bootstrap-table.min.js"></script>
 	<script src="dist/js/bootstrap-table-zh-CN.min.js"></script>
 
 	<script>
+	function unzip(b64Data){
+		var strData   = atob(b64Data);
+		// Convert binary string to character-number array
+		var charData  = strData.split('').map(function(x){return x.charCodeAt(0);});
+		// Turn number array into byte-array
+		var binData   = new Uint8Array(charData);
+		// // unzip
+		var data    = pako.inflate(binData);
+		// Convert gunzipped byteArray back to ascii string:
+		strData   = new TextDecoder("utf-8").decode(data);
+		return strData;
+	}
+	function zip(str){
+		 var binaryString = pako.gzip(encodeURIComponent(str), { to: 'string' })
+		 return btoa(binaryString);
+	}
 	$(document).ready(function(){
+		
+		var pako = window.pako;
 
 		$('#table').bootstrapTable({
 					striped : true, //是否显示行间隔色
@@ -54,6 +73,7 @@ var _hmt = _hmt || [];
 				return response.json();
 			}).then(function (json) {
 				var data = json["data"];
+				data = unzip(data)
 				var d = $.parseJSON(data);
 				
 				$('#table').bootstrapTable("load", d["info"]);
@@ -71,6 +91,7 @@ var _hmt = _hmt || [];
 				return response.json();
 			}).then(function (json) {
 				var data = json["data"];
+				data = unzip(data)
 				var d = $.parseJSON(data);
 
 				if (d["info"] == null)
