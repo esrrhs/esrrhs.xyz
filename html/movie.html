@@ -61,6 +61,63 @@ var _hmt = _hmt || [];
 		 var binaryString = pako.gzip(encodeURIComponent(str), { to: 'string' })
 		 return btoa(binaryString);
 	}
+	function gundongtiao(imgd, nimgd) {
+		//填充轮播图数
+		for(var i=0;i<imgd.length; i++){
+			if(i == 0){
+				$("#olnum").append("<li data-target='#carousel-example-generic' data-slide-to='0'  class='active'></li>")
+			}else{
+				$("#olnum").append("<li data-target='#carousel-example-generic' data-slide-to='"+i+"'></li>")
+			}
+		}
+		//填充轮播图数
+		for(var i=0;i<nimgd.length; i++){
+			if(i == 0){
+				$("#olnum1").append("<li data-target='#carousel-example-generic' data-slide-to='0'  class='active'></li>")
+			}else{
+				$("#olnum1").append("<li data-target='#carousel-example-generic' data-slide-to='"+i+"'></li>")
+			}
+		}
+		//填充每幅图像的具体信息
+		for(var i = 0; i < imgd.length; i++) {
+			if(i == 0) {
+				$("#lunbotu").append("<div class='item active'>" +
+						"<a target='_blank' href='" + imgd[i].url + "'>" +
+						"<img class='img-rounded' alt='Cinque Terre' width='200' height='400' src='" + imgd[i].img + "' alt=''></a>" +
+						"<div class='carousel-caption'>" +
+						"<h3><span class='label label-danger'>" + imgd[i].name + "</span></h3>" +
+						"</div>" +
+						"</div>");
+			} else {
+				$("#lunbotu").append("<div class='item'>" +
+						"<a target='_blank' href='" + imgd[i].url + "'>" +
+						"<img class='img-rounded' alt='Cinque Terre' width='200' height='400' src='" + imgd[i].img + "' alt=''></a>" +
+						"<div class='carousel-caption'>" +
+						"<h3><span class='label label-danger'>" + imgd[i].name + "</span></h3>" +
+						"</div>" +
+						"</div>");
+			}
+		}
+		for(var i = 0; i < nimgd.length; i++) {
+			if(i == 0) {
+				$("#lunbotu1").append("<div class='item active'>" +
+						"<a target='_blank' href='" + nimgd[i].url + "'>" +
+						"<img class='img-rounded' alt='Cinque Terre' width='200' height='400' src='" + nimgd[i].img + "' alt=''></a>" +
+						"<div class='carousel-caption'>" +
+						"<h3><span class='label label-success'>" + nimgd[i].name + "</span></h3>" +
+						"</div>" +
+						"</div>");
+			} else {
+				$("#lunbotu1").append("<div class='item'>" +
+						"<a target='_blank' href='" + nimgd[i].url + "'>" +
+						"<img class='img-rounded' alt='Cinque Terre' width='200' height='400' src='" + nimgd[i].img + "' alt=''></a>" +
+						"<div class='carousel-caption'>" +
+						"<h3><span class='label label-success'>" + nimgd[i].name + "</span></h3>" +
+						"</div>" +
+						"</div>");
+			}
+		}
+	}
 	$(document).ready(function(){
 
 		var pako = window.pako;
@@ -80,9 +137,15 @@ var _hmt = _hmt || [];
 				var data = json["data"];
 				data = unzip(data)
 				var d = $.parseJSON(data);
-				
 				$('#table').bootstrapTable("load", d["info"]);
 				$("#total").text("链接数 : "+d["n"]);
+				
+				$("#lunbotu").empty();
+				$("#olnum").empty();
+				
+				var imgd = d["hot"]
+				var nimgd = d["new"]
+				gundongtiao(imgd, nimgd)
 			});
 		
 	  $("#cal").click(function(){
@@ -121,10 +184,33 @@ var _hmt = _hmt || [];
   </head>
 
   <body>
+  
+    <div class="container" class="row" >
+	  <div class="col-sm-2 col-md-2 col-lg-2 col-md-push-80">
+		<div id="carousel-example-generic" class="carousel slide" data-ride="carousel" class="col-*-*">
+			<!-- Indicators -->
+			<ol class="carousel-indicators" id="olnum">
+				<!--填充到这里-->
+			</ol>
+			<!-- Wrapper for slides -->
+			<div class="carousel-inner" role="listbox" id="lunbotu">
+				<!--填充到这里-->
+			</div>
 
-    <div class="container">
-
+			<!-- Controls -->
+			<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+				<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+			<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+				<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+			</a>
+		</div>
+	  </div>
+	  <div class="col-sm-8 col-md-8 col-lg-8">
       <form class="form-signin">
+	  	
         <ul class="list-inline">
 		<li><h1 class="form-signin-heading">MOVIE搜索</h1></li>
 		<li><span class="label label-default" id="total">条数</span></li>
@@ -139,6 +225,30 @@ var _hmt = _hmt || [];
 		<button id="cal" type="button" class="btn btn-primary btn-lg btn-block">搜索</button>
 		
       </form>
+	  </div>
+	  
+	  <div class="col-sm-2 col-md-2 col-lg-2 col-md-pull-80">
+		<div id="carousel-example-generic1" class="carousel slide" data-ride="carousel" class="col-*-*">
+			<!-- Indicators -->
+			<ol class="carousel-indicators" id="olnum1">
+				<!--填充到这里-->
+			</ol>
+			<!-- Wrapper for slides -->
+			<div class="carousel-inner" role="listbox" id="lunbotu1">
+				<!--填充到这里-->
+			</div>
+
+			<!-- Controls -->
+			<a class="left carousel-control" href="#carousel-example-generic1" role="button" data-slide="prev">
+				<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+			<a class="right carousel-control" href="#carousel-example-generic1" role="button" data-slide="next">
+				<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+			</a>
+		</div>
+	  </div>
 	  
         <table class="table" id="table">
             <thead>
