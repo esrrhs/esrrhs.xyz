@@ -61,6 +61,12 @@ var _hmt = _hmt || [];
 		 var binaryString = pako.gzip(encodeURIComponent(str), { to: 'string' })
 		 return btoa(binaryString);
 	}
+	function getImage(url){
+		// 把现在的图片连接传进来，返回一个不受限制的路径
+		if(url !== undefined){
+			return url.replace(/^(http)[s]*(\:\/\/)/,'https://images.weserv.nl/?url=');
+		}
+	}
 	function gundongtiao(imgd, nimgd) {
 		//填充轮播图数
 		for(var i=0;i<imgd.length; i++){
@@ -82,7 +88,7 @@ var _hmt = _hmt || [];
 		for(var i = 0; i < imgd.length; i++) {
 			if(i == 0) {
 				$("#lunbotu").append("<div class='item active'>" +
-						"<a target='_blank' href='" + imgd[i].url + "'>" +
+						"<a target='_blank' href='" + getImage(imgd[i].url) + "'>" +
 						"<img class='img-rounded' alt='Cinque Terre' width='200' height='400' src='" + imgd[i].img + "' alt=''></a>" +
 						"<div class='carousel-caption'>" +
 						"<h3><span class='label label-danger'>" + imgd[i].name + "</span></h3>" +
@@ -90,7 +96,7 @@ var _hmt = _hmt || [];
 						"</div>");
 			} else {
 				$("#lunbotu").append("<div class='item'>" +
-						"<a target='_blank' href='" + imgd[i].url + "'>" +
+						"<a target='_blank' href='" + getImage(imgd[i].url) + "'>" +
 						"<img class='img-rounded' alt='Cinque Terre' width='200' height='400' src='" + imgd[i].img + "' alt=''></a>" +
 						"<div class='carousel-caption'>" +
 						"<h3><span class='label label-danger'>" + imgd[i].name + "</span></h3>" +
@@ -101,7 +107,7 @@ var _hmt = _hmt || [];
 		for(var i = 0; i < nimgd.length; i++) {
 			if(i == 0) {
 				$("#lunbotu1").append("<div class='item active'>" +
-						"<a target='_blank' href='" + nimgd[i].url + "'>" +
+						"<a target='_blank' href='" + getImage(nimgd[i].url) + "'>" +
 						"<img class='img-rounded' alt='Cinque Terre' width='200' height='400' src='" + nimgd[i].img + "' alt=''></a>" +
 						"<div class='carousel-caption'>" +
 						"<h3><span class='label label-success'>" + nimgd[i].name + "</span></h3>" +
@@ -109,7 +115,7 @@ var _hmt = _hmt || [];
 						"</div>");
 			} else {
 				$("#lunbotu1").append("<div class='item'>" +
-						"<a target='_blank' href='" + nimgd[i].url + "'>" +
+						"<a target='_blank' href='" + getImage(nimgd[i].url) + "'>" +
 						"<img class='img-rounded' alt='Cinque Terre' width='200' height='400' src='" + nimgd[i].img + "' alt=''></a>" +
 						"<div class='carousel-caption'>" +
 						"<h3><span class='label label-success'>" + nimgd[i].name + "</span></h3>" +
