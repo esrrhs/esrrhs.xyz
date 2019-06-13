@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-142060691-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-142060691-1');
+</script>
 <script>
 var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
   hm.src = "https://hm.baidu.com/hm.js?08be2524e25f77c0fc3587ba24a3e252";
-  var s = document.getElementsByTagName("script")[0]; 
+  var s = document.getElementsByTagName("script")[0];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
@@ -17,7 +26,7 @@ var _hmt = _hmt || [];
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
-	
+
     <title>BT搜索</title>
 
     <!-- Bootstrap core CSS -->
@@ -41,7 +50,7 @@ var _hmt = _hmt || [];
 	<style>
 	    .bootstrap-table .table thead > tr > th {
 	        min-width: 200px;
-	       
+
 	    }
 	</style>
 	<script>
@@ -62,7 +71,7 @@ var _hmt = _hmt || [];
 		 return btoa(binaryString);
 	}
 	$(document).ready(function(){
-		
+
 		var pako = window.pako;
 
 		$('#table').bootstrapTable({
@@ -73,25 +82,25 @@ var _hmt = _hmt || [];
 					pageSize : 10,//单页记录数
 					pageList : [ 5, 10, 20, 30 ],//可选择单页记录数
 				});
-				
+
 		fetch("http://ali.esrrhs.xyz/dhtlast").then(function (response) {
 				return response.json();
 			}).then(function (json) {
 				var data = json["data"];
 				data = unzip(data)
 				var d = $.parseJSON(data);
-				
+
 				$('#table').bootstrapTable("load", d["info"]);
 				$("#total").text("种子数 : "+d["n"]);
 			});
-		
-		
+
+
 	  $("#cal").click(function(){
-		
+
 		var name = $("#inputName").val()
 
 		$('#table').bootstrapTable("load", [{"infohash":"加载中......","name":"加载中......"}]);
-		
+
 		fetch("http://ali.esrrhs.xyz/dht?name="+name).then(function (response) {
 				return response.json();
 			}).then(function (json) {
@@ -107,11 +116,11 @@ var _hmt = _hmt || [];
 				{
 					$('#table').bootstrapTable("load", d["info"]);
 				}
-				
+
 				$("#total").text("种子数 : "+d["n"]);
 			});
 	  });
-	
+
 	});
 	</script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -130,17 +139,17 @@ var _hmt = _hmt || [];
 		<li><h1 class="form-signin-heading">BT搜索</h1></li>
 		<li><span class="label label-default" id="total">条数</span></li>
 		</ul>
-		
+
 		<ul class="list-inline">
 		<li><h2><span class="label label-default">输入</span></h2></li>
         <li><label for="inputName" class="sr-only">输入</label>
         <input type="name" id="inputName" class="form-control" placeholder="输入搜索词 空格分割" value="" required autofocus>
 		</li></ul>
-						
+
 		<button id="cal" type="button" class="btn btn-primary btn-lg btn-block">搜索</button>
-		
+
       </form>
-	  
+
         <table class="table" id="table">
             <thead>
                 <tr>
