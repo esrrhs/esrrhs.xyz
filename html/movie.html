@@ -67,6 +67,10 @@ var _hmt = _hmt || [];
 			return tmp = url.replace(/^(http)[s]*(\:\/\/)/,'https://images.weserv.nl/?h=400&w=200&url=');
 		}
 	}
+	function showName(name) {
+		$("#inputName").val(name);
+		query(name);
+	}
 	function gundongtiao(imgd, nimgd) {
 		//填充轮播图数
 		for(var i=0;i<imgd.length; i++){
@@ -88,7 +92,7 @@ var _hmt = _hmt || [];
 		for(var i = 0; i < imgd.length; i++) {
 			if(i == 0) {
 				$("#lunbotu").append("<div class='item active'>" +
-						"<a target='_blank' href='" + imgd[i].url + "'>" +
+						"<a target='_blank' href='" + imgd[i].url + "' onClick=\"return showName('" + imgd[i].name + "');\">" +
 						"<img class='img-rounded' alt='Cinque Terre' width='200' height='400' src='" + getImage(imgd[i].img) + "' alt=''></a>" +
 						"<div class='carousel-caption'>" +
 						"<h3><span class='label label-danger'>" + imgd[i].name + "</span></h3>" +
@@ -96,7 +100,7 @@ var _hmt = _hmt || [];
 						"</div>");
 			} else {
 				$("#lunbotu").append("<div class='item'>" +
-						"<a target='_blank' href='" + imgd[i].url + "'>" +
+						"<a target='_blank' href='" + imgd[i].url + "' onClick=\"return showName('" + imgd[i].name + "');\">" +
 						"<img class='img-rounded' alt='Cinque Terre' width='200' height='400' src='" + getImage(imgd[i].img) + "' alt=''></a>" +
 						"<div class='carousel-caption'>" +
 						"<h3><span class='label label-danger'>" + imgd[i].name + "</span></h3>" +
@@ -107,7 +111,7 @@ var _hmt = _hmt || [];
 		for(var i = 0; i < nimgd.length; i++) {
 			if(i == 0) {
 				$("#lunbotu1").append("<div class='item active'>" +
-						"<a target='_blank' href='" + nimgd[i].url + "'>" +
+						"<a target='_blank' href='" + nimgd[i].url + "' onClick=\"return showName('" + nimgd[i].name + "');\">" +
 						"<img class='img-rounded' alt='Cinque Terre' width='200' height='400' src='" + getImage(nimgd[i].img) + "' alt=''></a>" +
 						"<div class='carousel-caption'>" +
 						"<h3><span class='label label-success'>" + nimgd[i].name + "</span></h3>" +
@@ -115,7 +119,7 @@ var _hmt = _hmt || [];
 						"</div>");
 			} else {
 				$("#lunbotu1").append("<div class='item'>" +
-						"<a target='_blank' href='" + nimgd[i].url + "'>" +
+						"<a target='_blank' href='" + nimgd[i].url + "' onClick=\"return showName('" + nimgd[i].name + "');\">" +
 						"<img class='img-rounded' alt='Cinque Terre' width='200' height='400' src='" + getImage(nimgd[i].img) + "' alt=''></a>" +
 						"<div class='carousel-caption'>" +
 						"<h3><span class='label label-success'>" + nimgd[i].name + "</span></h3>" +
@@ -123,6 +127,29 @@ var _hmt = _hmt || [];
 						"</div>");
 			}
 		}
+	}
+	function query(name) {
+		
+		$('#table').bootstrapTable("load", [{"title":"加载中......","name":"加载中......","url":"加载中......"}]);
+		
+		fetch("http://home.esrrhs.xyz/spider?name="+name).then(function (response) {
+				return response.json();
+			}).then(function (json) {
+				var data = json["data"];
+				data = unzip(data)
+				var d = $.parseJSON(data);
+				
+				if (d["info"] == null)
+				{
+					$('#table').bootstrapTable("load", []);
+				}
+				else
+				{
+					$('#table').bootstrapTable("load", d["info"]);
+				}
+				
+				$("#total").text("链接数 : "+d["n"]);
+			});
 	}
 	$(document).ready(function(){
 
@@ -155,29 +182,9 @@ var _hmt = _hmt || [];
 			});
 		
 	  $("#cal").click(function(){
-		
-		var name = $("#inputName").val()
-
-		$('#table').bootstrapTable("load", [{"title":"加载中......","name":"加载中......","url":"加载中......"}]);
-		
-		fetch("http://home.esrrhs.xyz/spider?name="+name).then(function (response) {
-				return response.json();
-			}).then(function (json) {
-				var data = json["data"];
-				data = unzip(data)
-				var d = $.parseJSON(data);
-				
-				if (d["info"] == null)
-				{
-					$('#table').bootstrapTable("load", []);
-				}
-				else
-				{
-					$('#table').bootstrapTable("load", d["info"]);
-				}
-				
-				$("#total").text("链接数 : "+d["n"]);
-			});
+	
+			var name = $("#inputName").val()
+			query(name);
 	  });
 	
 	});
@@ -230,6 +237,8 @@ var _hmt = _hmt || [];
 						
 		<button id="cal" type="button" class="btn btn-primary btn-lg btn-block">搜索</button>
 		
+	    <a onClick="return showName('綜藝大熱門');" style='color:blue'>綜藝大熱門</a>
+	    <a onClick="return showName('綜藝玩很大');" style='color:blue'>綜藝玩很大</a>
       </form>
 	  </div>
 	  
@@ -255,7 +264,6 @@ var _hmt = _hmt || [];
 			</a>
 		</div>
 	  </div>
-	  
         <table class="table" id="table">
             <thead>
                 <tr>
