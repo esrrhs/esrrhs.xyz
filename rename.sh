@@ -7,4 +7,3 @@ set -x
 newname=$1
 echo $newname
 grep esrrhs.xyz * -rl | grep -v .sh | xargs sed 's#.xyz#'$newname'#g' -i
-grep "esrrhs\\\.xyz" * -r | xargs sed 's#.xyz#'$newname'#g' -i
