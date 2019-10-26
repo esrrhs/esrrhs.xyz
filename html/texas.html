@@ -3,22 +3,26 @@
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142060691-1"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    window.dataLayer = window.dataLayer || [];
 
-  gtag('config', 'UA-142060691-1');
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'UA-142060691-1');
 </script>
 <script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?08be2524e25f77c0fc3587ba24a3e252";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?08be2524e25f77c0fc3587ba24a3e252";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
 </script>
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,7 +30,7 @@ var _hmt = _hmt || [];
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
-	
+
     <title>德州胜率计算</title>
 
     <!-- Bootstrap core CSS -->
@@ -39,75 +43,80 @@ var _hmt = _hmt || [];
     <link href="texas.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--[if lt IE 9]>
+    <script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="assets/js/ie-emulation-modes-warning.js"></script>
-	<script src="jquery.min.js"></script>
-	<script>
-	$(document).ready(function(){
-	  $("#cal").click(function(){
-	  
-		var hand = $("#inputHand").val()
-		var pub = $("#inputPub").val()
-		
-		fetch("http://home.esrrhs.xyz/texas?hand="+hand+"&pub="+pub).then(function (response) {
-				return response.json();
-			}).then(function (json) {
-				var data = json["data"];
-				var d = $.parseJSON(data);
-				$("#pro").text(d["probability"]);
-				$("#max").text(d["max"]);
-				$("#maxtype").text(d["type"]);
-			});
-	  });
-	});
-	</script>
+    <script src="jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#cal").click(function () {
+
+                var hand = $("#inputHand").val()
+                var pub = $("#inputPub").val()
+
+                fetch("http://home.esrrhs.xyz/texas?hand=" + hand + "&pub=" + pub).then(function (response) {
+                    return response.json();
+                }).then(function (json) {
+                    var data = json["data"];
+                    var d = $.parseJSON(data);
+                    $("#pro").text(d["probability"]);
+                    $("#max").text(d["max"]);
+                    $("#maxtype").text(d["type"]);
+                });
+            });
+        });
+    </script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-  </head>
+</head>
 
-  <body>
+<body>
 
-    <div class="container">
+<div class="container">
 
-      <form class="form-signin">
+    <form class="form-signin">
         <h2 class="form-signin-heading">德州扑克计算器</h2>
-		<ul class="list-inline">
-		<li><h2><span class="label label-default">手牌</span></h2></li>
-        <li><label for="inputHand" class="sr-only">手牌</label>
-        <input type="hand" id="inputHand" class="form-control" placeholder="手牌：如黑A,红2" value="黑A,红10" required autofocus>
-		</li></ul>
-				
-		<ul class="list-inline">
-		<li><h2><span class="label label-default">公牌</span></h2></li>
-		<li><label for="inputPub" class="sr-only">公牌</label>
-        <input type="pub" id="inputPub" class="form-control" placeholder="公牌：如梅Q,方10,鬼  可以留空" value="梅2,方Q,方A" required>
-        </li></ul>
-		
-		<button id="cal" type="button" class="btn btn-primary btn-lg btn-block">计算</button>
-		<ul class="list-unstyled">
-		<ul class="list-inline">
-			<li><h3><span class="label label-default">胜率</span></h3></li>
-			<li><h3 id="pro"></h3></li>
-		</ul>
-		<ul class="list-inline">
-			<li><h3><span class="label label-default">最大牌</span></h3></li>
-			<li><h4 id="max"></h4></li>
-		</ul>
-		<ul class="list-inline">
-			<li><h3><span class="label label-default">牌型</span></h3></li>
-			<li><h3 id="maxtype"></h3></li>
-		</ul>
-		</ul>
-      </form>
-	  
+        <ul class="list-inline">
+            <li><h2><span class="label label-default">手牌</span></h2></li>
+            <li><label for="inputHand" class="sr-only">手牌</label>
+                <input type="hand" id="inputHand" class="form-control" placeholder="手牌：如黑A,红2" value="黑A,红10" required
+                       autofocus>
+            </li>
+        </ul>
 
-    </div> <!-- /container -->
+        <ul class="list-inline">
+            <li><h2><span class="label label-default">公牌</span></h2></li>
+            <li><label for="inputPub" class="sr-only">公牌</label>
+                <input type="pub" id="inputPub" class="form-control" placeholder="公牌：如梅Q,方10,鬼  可以留空" value="梅2,方Q,方A"
+                       required>
+            </li>
+        </ul>
+
+        <button id="cal" type="button" class="btn btn-primary btn-lg btn-block">计算</button>
+        <ul class="list-unstyled">
+            <ul class="list-inline">
+                <li><h3><span class="label label-default">胜率</span></h3></li>
+                <li><h3 id="pro"></h3></li>
+            </ul>
+            <ul class="list-inline">
+                <li><h3><span class="label label-default">最大牌</span></h3></li>
+                <li><h4 id="max"></h4></li>
+            </ul>
+            <ul class="list-inline">
+                <li><h3><span class="label label-default">牌型</span></h3></li>
+                <li><h3 id="maxtype"></h3></li>
+            </ul>
+        </ul>
+    </form>
 
 
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
-  </body>
+</div> <!-- /container -->
+
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
 </html>
