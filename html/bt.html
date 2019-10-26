@@ -70,6 +70,31 @@ var _hmt = _hmt || [];
 		 var binaryString = pako.gzip(encodeURIComponent(str), { to: 'string' })
 		 return btoa(binaryString);
 	}
+	
+	function query(name) {
+	
+		$('#table').bootstrapTable("load", [{"infohash":"加载中......","name":"加载中......"}]);
+
+		fetch("http://ali.esrrhs.xyz/dht?name="+name).then(function (response) {
+				return response.json();
+			}).then(function (json) {
+				var data = json["data"];
+				data = unzip(data)
+				var d = $.parseJSON(data);
+
+				if (d["info"] == null)
+				{
+					$('#table').bootstrapTable("load", []);
+				}
+				else
+				{
+					$('#table').bootstrapTable("load", d["info"]);
+				}
+
+				$("#total").text("种子数 : "+d["n"]);
+			});
+	}
+	
 	$(document).ready(function(){
 
 		var pako = window.pako;
@@ -98,29 +123,18 @@ var _hmt = _hmt || [];
 	  $("#cal").click(function(){
 
 		var name = $("#inputName").val()
-
-		$('#table').bootstrapTable("load", [{"infohash":"加载中......","name":"加载中......"}]);
-
-		fetch("http://ali.esrrhs.xyz/dht?name="+name).then(function (response) {
-				return response.json();
-			}).then(function (json) {
-				var data = json["data"];
-				data = unzip(data)
-				var d = $.parseJSON(data);
-
-				if (d["info"] == null)
-				{
-					$('#table').bootstrapTable("load", []);
-				}
-				else
-				{
-					$('#table').bootstrapTable("load", d["info"]);
-				}
-
-				$("#total").text("种子数 : "+d["n"]);
-			});
+		query(name);
 	  });
 
+
+	  $("#inputName").keypress(function(event){
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if(keycode == '13'){
+           event.preventDefault();
+			var name = $("#inputName").val()
+			query(name);
+        }
+      });
 	});
 	</script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->

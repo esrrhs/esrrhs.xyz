@@ -195,7 +195,14 @@ var _hmt = _hmt || [];
 			var name = $("#inputName").val()
 			query(name);
 	  });
-	
+	  $("#inputName").keypress(function(event){
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if(keycode == '13'){
+           event.preventDefault();
+			var name = $("#inputName").val()
+			query(name);
+        }
+      });
 	});
 	</script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
