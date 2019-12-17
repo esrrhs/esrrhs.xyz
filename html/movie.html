@@ -161,10 +161,10 @@
                 var d = $.parseJSON(data);
 
                 if (d["info"] == null) {
-					globalInfo = []
+                    globalInfo = [];
                     $('#table').bootstrapTable("load", []);
                 } else {
-					globalInfo = d["info"]
+                    globalInfo = d["info"];
                     $('#table').bootstrapTable("load", d["info"]);
                 }
 
@@ -183,26 +183,26 @@
                 sidePagination: 'client',//server:服务器端分页|client：前端分页
                 pageSize: 10,//单页记录数
                 pageList: [5, 10, 20, 30],//可选择单页记录数
-				columns:[
-					{
-						field : 'title',
-						title : 'Title',
-					},
-					{
-						field : 'name',
-						title : 'Name',
-					},
-					{
-						field : 'url',
-						title : 'Url',
-					},
-					{
-						field : 'operate',
-						title : '在线观看',
-						events : operateEvents,
-						formatter : operateFormatter
-					}
-				]
+                columns: [
+                    {
+                        field: 'title',
+                        title: 'Title',
+                    },
+                    {
+                        field: 'name',
+                        title: 'Name',
+                    },
+                    {
+                        field: 'url',
+                        title: 'Url',
+                    },
+                    {
+                        field: 'operate',
+                        title: '在线观看',
+                        events: operateEvents,
+                        formatter: operateFormatter
+                    }
+                ]
             });
 
             fetch("http://home.esrrhs.xyz/spiderlast").then(function (response) {
@@ -211,7 +211,7 @@
                 var data = json["data"];
                 data = unzip(data)
                 var d = $.parseJSON(data);
-				globalInfo = d["info"]
+                globalInfo = d["info"];
                 $('#table').bootstrapTable("load", d["info"]);
                 $("#total").text("链接数 : " + d["n"]);
 
@@ -237,21 +237,22 @@
                 }
             });
         });
-		window.operateEvents = {
-        'click .watch' : function(e, value, row, index) {
-				var url = globalInfo[index]["url"];
-				if (url.toLowerCase().startsWith("http")) {
-					window.open(url, "_blank"); 
-				} else {
-					alert("不支持这种格式")
-				}
-			}
-		}
-		function operateFormatter(value, row, index) {
-        return [
-					'<button type="button" class="watch btn btn-default  btn-sm" style="margin-right:15px;">点击观看</button>' ]
-					.join('');
-		}
+        window.operateEvents = {
+            'click .watch': function (e, value, row, index) {
+                var url = globalInfo[index]["url"];
+                if (url.toLowerCase().startsWith("http")) {
+                    window.open(url, "_blank");
+                } else {
+                    alert("不支持这种格式")
+                }
+            }
+        }
+
+        function operateFormatter(value, row, index) {
+            return [
+                '<button type="button" class="watch btn btn-default  btn-sm" style="margin-right:15px;">点击观看</button>']
+                .join('');
+        }
     </script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -305,6 +306,7 @@
 
             <a onClick="return showName('綜藝大熱門');" style='color:blue'>綜藝大熱門</a>
             <a onClick="return showName('綜藝玩很大');" style='color:blue'>綜藝玩很大</a>
+            <a onClick="return showName('小明星大跟班');" style='color:blue'>小明星大跟班</a>
         </form>
     </div>
 
