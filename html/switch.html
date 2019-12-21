@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-142060691-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'UA-142060691-1');
+</script>
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?08be2524e25f77c0fc3587ba24a3e252";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <title>Switch游戏</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="dist/css/bootstrap-table.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="texas.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]>
+    <script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="assets/js/ie-emulation-modes-warning.js"></script>
+    <script src="jquery.min.js"></script>
+    <script src="pako.min.js"></script>
+    <script src="dist/js/bootstrap.min.js"></script>
+    <script src="dist/js/bootstrap-table.min.js"></script>
+    <script src="dist/js/bootstrap-table-zh-CN.min.js"></script>
+    <style>
+        .bootstrap-table .table thead > tr > th {
+            min-width: 200px;
+        }
+    </style>
+    <script>
+        function unzip(b64Data) {
+            var strData = atob(b64Data);
+            // Convert binary string to character-number array
+            var charData = strData.split('').map(function (x) {
+                return x.charCodeAt(0);
+            });
+            // Turn number array into byte-array
+            var binData = new Uint8Array(charData);
+            // // unzip
+            var data = pako.inflate(binData);
+            // Convert gunzipped byteArray back to ascii string:
+            strData = new TextDecoder("utf-8").decode(data);
+            return strData;
+        }
+
+        function zip(str) {
+            var binaryString = pako.gzip(encodeURIComponent(str), {to: 'string'})
+            return btoa(binaryString);
+        }
+
+        function getImage(url) {
+            // 把现在的图片连接传进来，返回一个不受限制的路径
+            if (url !== undefined) {
+                return tmp = url.replace(/^(http)[s]*(\:\/\/)/, 'https://images.weserv.nl/?h=400&w=200&url=');
+            }
+        }
+
+        function showName(name) {
+            $("#inputName").val(name);
+            query(name);
+        }
+
+        function gundongtiao(imgd) {
+            //填充轮播图数
+            for (var i = 0; i < imgd.length; i++) {
+                if (i == 0) {
+                    $("#olnum").append("<li data-target='#carousel-example-generic' data-slide-to='0'  class='active'></li>")
+                } else {
+                    $("#olnum").append("<li data-target='#carousel-example-generic' data-slide-to='" + i + "'></li>")
+                }
+            }
+            //填充每幅图像的具体信息
+            for (var i = 0; i < imgd.length; i++) {
+                if (i == 0) {
+                    $("#lunbotu").append("<div class='item active'>" +
+                        "<a target='_blank' href='" + imgd[i].url + "' onClick=\"return showName('" + imgd[i].name + "');\">" +
+                        "<img class='img-rounded' alt='Cinque Terre' width='200' height='400' src='" + getImage(imgd[i].img) + "' alt=''></a>" +
+                        "<div class='carousel-caption'>" +
+                        "<h3><span class='label label-danger'>" + imgd[i].name + "</span></h3>" +
+                        "</div>" +
+                        "</div>");
+                } else {
+                    $("#lunbotu").append("<div class='item'>" +
+                        "<a target='_blank' href='" + imgd[i].url + "' onClick=\"return showName('" + imgd[i].name + "');\">" +
+                        "<img class='img-rounded' alt='Cinque Terre' width='200' height='400' src='" + getImage(imgd[i].img) + "' alt=''></a>" +
+                        "<div class='carousel-caption'>" +
+                        "<h3><span class='label label-danger'>" + imgd[i].name + "</span></h3>" +
+                        "</div>" +
+                        "</div>");
+                }
+            }
+        }
+
+        $(document).ready(function () {
+
+            $('#table').bootstrapTable({
+                striped: true, //是否显示行间隔色
+                pageNumber: 1, //初始化加载第一页
+                pagination: true,//是否分页
+                sidePagination: 'client',//server:服务器端分页|client：前端分页
+                pageSize: 10,//单页记录数
+                pageList: [5, 10, 20, 30],//可选择单页记录数
+                columns: [
+                    {
+                        field: 'img',
+                        title: 'Image',
+						formatter:function(value,row,index){
+							var s;
+							if(row.img!=null){
+								var url = getImage(row.img);
+								s = '<a class = "view"  href="javascript:void(0)"><img   src="'+url+'" /></a>';
+							}
+							return s;
+						}
+                    },
+                    {
+                        field: 'name',
+                        title: 'Name',
+                    },
+                    {
+                        field: 'operate',
+                        title: '下载',
+                        events: operateEvents,
+                        formatter: operateFormatter
+                    }
+                ]
+            });
+
+
+            fetch("http://home.esrrhs.xyz/switch").then(function (response) {
+                return response.json();
+            }).then(function (json) {
+                var data = json["data"];
+                data = unzip(data)
+                var d = $.parseJSON(data);
+                
+                $("#total").text("链接数 : " + d["n"]);
+
+                $("#lunbotu").empty();
+                $("#olnum").empty();
+
+                var imgd = d["hot"]
+                gundongtiao(imgd)
+				
+                $('#table').bootstrapTable("load", d["all"]);
+				$("#total").text("数目 : " + d["n"]);
+            });
+        });
+        
+        window.operateEvents = {
+            'click .watch': function (e, value, row, index) {
+                var url = row.url;
+                window.open(url, "_blank");
+            }
+        }
+
+        function operateFormatter(value, row, index) {
+            return [
+                '<button type="button" class="watch btn btn-success  btn-sm" style="margin-right:30px;">下载</button>']
+                .join('');
+        }
+    </script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<div class="container"  class="row">
+    <div class="col-sm-8 col-md-8 col-lg-8">
+        <form class="form-signin">
+
+            <ul class="list-inline">
+                <li><h1 class="form-signin-heading">Switch游戏</h1></li>
+                <li><span class="label label-default" id="total">条数</span></li>
+            </ul>
+        </form>
+    </div>
+	
+    <div class="col-sm-2 col-md-2 col-lg-2">
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" class="col-*-*">
+            <!-- Indicators -->
+            <ol class="carousel-indicators" id="olnum">
+                <!--填充到这里-->
+            </ol>
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox" id="lunbotu">
+                <!--填充到这里-->
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+
+    
+    <table class="table" id="table">
+        <thead>
+        <tr>
+            <th data-field="img">Image</th>
+            <th data-field="name" data-sortable="True">Name</th>
+        </tr>
+        </thead>
+    </table>
+</div> <!-- /container -->
+
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>
