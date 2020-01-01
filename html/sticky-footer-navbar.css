@@ -9,6 +9,8 @@ body {
   margin-bottom: 60px;
   background-image: url('back.jpg');
     background-position:center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .footer {
   position: absolute;
