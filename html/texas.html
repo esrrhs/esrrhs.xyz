@@ -54,7 +54,7 @@
                 var hand = $("#inputHand").val()
                 var pub = $("#inputPub").val()
 
-                fetch("http://home.esrrhs.xyz/texas?hand=" + hand + "&pub=" + pub).then(function (response) {
+                fetch("http://ali.esrrhs.xyz/texas?hand=" + hand + "&pub=" + pub).then(function (response) {
                     return response.json();
                 }).then(function (json) {
                     var data = json["data"];
