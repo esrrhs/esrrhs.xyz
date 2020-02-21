@@ -178,17 +178,28 @@
         });
         
         window.operateEvents = {
-            'click .watch': function (e, value, row, index) {
+            'click .download': function (e, value, row, index) {
                 var url = row.url;
+                window.open(url, "_blank");
+            },
+            'click .watch': function (e, value, row, index) {
+				var name = row.name;
+				name = name.replace(" XCI", " ");
+				name = name.replace(" NSZ", " ");
+				name = name.replace(" NSP", " ");
+				name = name.trim();
+                var url = "https://www.youtube.com/results?search_query="+name;
                 window.open(url, "_blank");
             }
         }
 
         function operateFormatter(value, row, index) {
             return [
-                '<button type="button" class="watch btn btn-success  btn-sm" style="margin-right:30px;">下载</button>']
+                '<button type="button" class="download btn btn-success  btn-sm" style="margin-right:30px;">下载</button>',
+				'<button type="button" class="watch btn btn-danger  btn-sm" style="margin-right:30px;">视频</button>']
                 .join('');
         }
+		
     </script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
