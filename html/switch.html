@@ -137,8 +137,9 @@
 						formatter:function(value,row,index){
 							var s;
 							if(row.img!=null){
+							    var src = row.url
 								var url = getImage(row.img);
-								s = '<a class = "view"  href="javascript:void(0)"><img   src="'+url+'" /></a>';
+								s = '<a class = "view"  href="'+src+'" target="_blank"><img src="'+url+'" /></a>';
 							}
 							return s;
 						}
