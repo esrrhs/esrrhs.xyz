@@ -193,6 +193,12 @@
                         title: 'Name',
                     },
                     {
+                        field: 'copy',
+                        title: '复制',
+                        events: copyEvents,
+                        formatter: copyFormatter
+                    },
+                    {
                         field: 'url',
                         title: 'Url',
                     },
@@ -251,6 +257,30 @@
         function operateFormatter(value, row, index) {
             return [
                 '<button type="button" class="watch btn btn-default  btn-sm" style="margin-right:15px;">点击观看</button>']
+                .join('');
+        }
+		
+        window.copyEvents = {
+            'click .copy': function (e, value, row, index) {
+				var textArea = document.createElement("textarea");
+				textArea.value = row.url;
+				// Avoid scrolling to bottom
+				textArea.style.top = "0";
+				textArea.style.left = "0";
+				textArea.style.position = "fixed";
+
+				document.body.appendChild(textArea);
+				textArea.focus();
+				textArea.select();
+				document.execCommand('copy');
+				document.body.removeChild(textArea);
+				alert("ok");
+            }
+        }
+
+        function copyFormatter(value, row, index) {
+            return [
+                '<button type="button" class="copy btn btn-default  btn-sm" style="margin-right:15px;">复制</button>']
                 .join('');
         }
     </script>
@@ -331,7 +361,7 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
-    </div>
+    </div>	
     <table class="table" id="table">
         <thead>
         <tr>

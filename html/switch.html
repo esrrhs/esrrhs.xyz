@@ -157,6 +157,7 @@
                 ]
             });
 
+            $('#table').bootstrapTable("load", [{"name": "加载中......"}]);
 
             fetch("http://ali.esrrhs.xyz/switch").then(function (response) {
                 return response.json();
