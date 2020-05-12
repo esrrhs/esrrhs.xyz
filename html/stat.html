@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Chart</title>
+    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="Chart.min.js"></script>
+    <script src="pako.min.js"></script>
+    <script src="jquery.min.js"></script>
+    <style>
+        canvas {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+    </style>
+</head>
+
+<body>
+<div style="width:80%;">
+    <canvas id="canvas"></canvas>
+</div>
+<br>
+<br>
+<button id="attackssh" type="button" class="btn btn-info">Attack SSH Data</button>
+<button id="attacksocks" type="button" class="btn btn-info">Attack Socks Data</button>
+<button id="spidercrawl" type="button" class="btn btn-warning">Spider Crawl Data</button>
+<button id="btcrawl" type="button" class="btn btn-success">BT Crawl Data</button>
+<button id="switchcrawl" type="button" class="btn btn-danger">Switch Crawl Data</button>
+<script>
+        function unzip(b64Data) {
+            var strData = atob(b64Data);
+            // Convert binary string to character-number array
+            var charData = strData.split('').map(function (x) {
+                return x.charCodeAt(0);
+            });
+            // Turn number array into byte-array
+            var binData = new Uint8Array(charData);
+            // // unzip
+            var data = pako.inflate(binData);
+            // Convert gunzipped byteArray back to ascii string:
+            strData = new TextDecoder("utf-8").decode(data);
+            return strData;
+        }
+
+    window.chartColors = {
+        red: 'rgb(255, 99, 132)',
+        orange: 'rgb(255, 159, 64)',
+        yellow: 'rgb(255, 205, 86)',
+        green: 'rgb(75, 192, 192)',
+        blue: 'rgb(54, 162, 235)',
+        purple: 'rgb(153, 102, 255)',
+        grey: 'rgb(201, 203, 207)'
+    };
+    // DEPRECATED
+    window.randomScalingFactor = function () {
+        return 100;
+    };
+    var config = {
+        type: 'line',
+        data: {},
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: 'Chart.js Line Chart'
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Time'
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Value'
+                    }
+                }]
+            }
+        }
+    };
+
+        function show(json) {
+            var data = json["data"];
+			data = unzip(data)
+			var d = $.parseJSON(data);
+			config.data = d;
+			var ctx = document.getElementById('canvas').getContext('2d');
+			window.myLine = new Chart(ctx, config);
+			window.myLine.update();
+        }
+
+    document.getElementById('attackssh').addEventListener('click', function () {
+	
+		fetch("http://gq.esrrhs.xyz/attacksshcj").then(function (response) {
+			return response.json();
+		}).then(function (json) {
+			show(json)
+		});
+    });
+
+    document.getElementById('attacksocks').addEventListener('click', function () {
+	
+		fetch("http://gq.esrrhs.xyz/attacksockscj").then(function (response) {
+			return response.json();
+		}).then(function (json) {
+			show(json)
+		});
+    });
+	
+    document.getElementById('spidercrawl').addEventListener('click', function () {
+	
+		fetch("http://ga.esrrhs.xyz/spidercj").then(function (response) {
+			return response.json();
+		}).then(function (json) {
+			show(json)
+		});
+    });
+	
+    document.getElementById('btcrawl').addEventListener('click', function () {
+	
+		fetch("http://ali.esrrhs.xyz/dhtcj").then(function (response) {
+			return response.json();
+		}).then(function (json) {
+			show(json)
+		});
+    });
+	
+    document.getElementById('switchcrawl').addEventListener('click', function () {
+	
+		fetch("http://ali.esrrhs.xyz/switchcj").then(function (response) {
+			return response.json();
+		}).then(function (json) {
+			show(json)
+		});
+    });
+
+</script>
+</body>
+
+</html>
