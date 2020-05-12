@@ -134,15 +134,15 @@
                     {
                         field: 'img',
                         title: 'Image',
-						formatter:function(value,row,index){
-							var s;
-							if(row.img!=null){
-							    var src = row.url
-								var url = getImage(row.img);
-								s = '<a class = "view"  href="'+src+'" target="_blank"><img src="'+url+'" /></a>';
-							}
-							return s;
-						}
+                        formatter: function (value, row, index) {
+                            var s;
+                            if (row.img != null) {
+                                var src = row.url
+                                var url = getImage(row.img);
+                                s = '<a class = "view"  href="' + src + '" target="_blank"><img src="' + url + '" /></a>';
+                            }
+                            return s;
+                        }
                     },
                     {
                         field: 'name',
@@ -165,7 +165,7 @@
                 var data = json["data"];
                 data = unzip(data)
                 var d = $.parseJSON(data);
-                
+
                 $("#total").text("链接数 : " + d["n"]);
 
                 $("#lunbotu").empty();
@@ -173,24 +173,24 @@
 
                 var imgd = d["hot"]
                 gundongtiao(imgd)
-				
+
                 $('#table').bootstrapTable("load", d["all"]);
-				$("#total").text("数目 : " + d["n"]);
+                $("#total").text("数目 : " + d["n"]);
             });
         });
-        
+
         window.operateEvents = {
             'click .download': function (e, value, row, index) {
                 var url = row.url;
                 window.open(url, "_blank");
             },
             'click .watch': function (e, value, row, index) {
-				var name = row.name;
-				name = name.replace(" XCI", " ");
-				name = name.replace(" NSZ", " ");
-				name = name.replace(" NSP", " ");
-				name = name.trim();
-                var url = "https://www.youtube.com/results?search_query="+name;
+                var name = row.name;
+                name = name.replace(" XCI", " ");
+                name = name.replace(" NSZ", " ");
+                name = name.replace(" NSP", " ");
+                name = name.trim();
+                var url = "https://www.youtube.com/results?search_query=" + name;
                 window.open(url, "_blank");
             }
         }
@@ -198,10 +198,10 @@
         function operateFormatter(value, row, index) {
             return [
                 '<button type="button" class="download btn btn-success  btn-sm" style="margin-right:30px;">下载</button>',
-				'<button type="button" class="watch btn btn-danger  btn-sm" style="margin-right:30px;">视频</button>']
+                '<button type="button" class="watch btn btn-danger  btn-sm" style="margin-right:30px;">视频</button>']
                 .join('');
         }
-		
+
     </script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -212,7 +212,7 @@
 
 <body>
 
-<div class="container"  class="row">
+<div class="container" class="row">
     <div class="col-sm-8 col-md-8 col-lg-8">
         <form class="form-signin">
 
@@ -222,7 +222,7 @@
             </ul>
         </form>
     </div>
-	
+
     <div class="col-sm-2 col-md-2 col-lg-2">
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" class="col-*-*">
             <!-- Indicators -->
@@ -246,7 +246,7 @@
         </div>
     </div>
 
-    
+
     <table class="table" id="table">
         <thead>
         <tr>

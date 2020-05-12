@@ -28,20 +28,20 @@
 <button id="btcrawl" type="button" class="btn btn-success">BT Crawl Data</button>
 <button id="switchcrawl" type="button" class="btn btn-danger">Switch Crawl Data</button>
 <script>
-        function unzip(b64Data) {
-            var strData = atob(b64Data);
-            // Convert binary string to character-number array
-            var charData = strData.split('').map(function (x) {
-                return x.charCodeAt(0);
-            });
-            // Turn number array into byte-array
-            var binData = new Uint8Array(charData);
-            // // unzip
-            var data = pako.inflate(binData);
-            // Convert gunzipped byteArray back to ascii string:
-            strData = new TextDecoder("utf-8").decode(data);
-            return strData;
-        }
+    function unzip(b64Data) {
+        var strData = atob(b64Data);
+        // Convert binary string to character-number array
+        var charData = strData.split('').map(function (x) {
+            return x.charCodeAt(0);
+        });
+        // Turn number array into byte-array
+        var binData = new Uint8Array(charData);
+        // // unzip
+        var data = pako.inflate(binData);
+        // Convert gunzipped byteArray back to ascii string:
+        strData = new TextDecoder("utf-8").decode(data);
+        return strData;
+    }
 
     window.chartColors = {
         red: 'rgb(255, 99, 132)',
@@ -92,59 +92,68 @@
         }
     };
 
-        function show(json) {
-            var data = json["data"];
-			data = unzip(data)
-			var d = $.parseJSON(data);
-			config.data = d;
-			var ctx = document.getElementById('canvas').getContext('2d');
-			window.myLine = new Chart(ctx, config);
-			window.myLine.update();
-        }
+    function show(json) {
+        var data = json["data"];
+        data = unzip(data)
+        var d = $.parseJSON(data);
+        config.data = d;
+        var ctx = document.getElementById('canvas').getContext('2d');
+        window.myLine = new Chart(ctx, config);
+        window.myLine.update();
+    }
 
     document.getElementById('attackssh').addEventListener('click', function () {
-	
-		fetch("http://gq.esrrhs.xyz/attacksshcj").then(function (response) {
-			return response.json();
-		}).then(function (json) {
-			show(json)
-		});
+
+        fetch("http://gq.esrrhs.xyz/attacksshcj").then(function (response) {
+            return response.json();
+        }).then(function (json) {
+            show(json)
+        });
     });
 
     document.getElementById('attacksocks').addEventListener('click', function () {
-	
-		fetch("http://gq.esrrhs.xyz/attacksockscj").then(function (response) {
-			return response.json();
-		}).then(function (json) {
-			show(json)
-		});
+
+        fetch("http://gq.esrrhs.xyz/attacksockscj").then(function (response) {
+            return response.json();
+        }).then(function (json) {
+            show(json)
+        });
     });
-	
+
     document.getElementById('spidercrawl').addEventListener('click', function () {
-	
-		fetch("http://ga.esrrhs.xyz/spidercj").then(function (response) {
-			return response.json();
-		}).then(function (json) {
-			show(json)
-		});
+
+        fetch("http://ga.esrrhs.xyz/spidercj").then(function (response) {
+            return response.json();
+        }).then(function (json) {
+            show(json)
+        });
     });
-	
+
     document.getElementById('btcrawl').addEventListener('click', function () {
-	
-		fetch("http://ali.esrrhs.xyz/dhtcj").then(function (response) {
-			return response.json();
-		}).then(function (json) {
-			show(json)
-		});
+
+        fetch("http://ali.esrrhs.xyz/dhtcj").then(function (response) {
+            return response.json();
+        }).then(function (json) {
+            show(json)
+        });
     });
-	
+
     document.getElementById('switchcrawl').addEventListener('click', function () {
-	
-		fetch("http://ali.esrrhs.xyz/switchcj").then(function (response) {
-			return response.json();
-		}).then(function (json) {
-			show(json)
-		});
+
+        fetch("http://ali.esrrhs.xyz/switchcj").then(function (response) {
+            return response.json();
+        }).then(function (json) {
+            show(json)
+        });
+    });
+
+    $(document).ready(function () {
+
+        fetch("http://gq.esrrhs.xyz/attacksshcj").then(function (response) {
+            return response.json();
+        }).then(function (json) {
+            show(json)
+        });
     });
 
 </script>
