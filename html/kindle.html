@@ -79,31 +79,16 @@
             return btoa(binaryString);
         }
 
-        function showName(name) {
-            $("#inputName").val(name);
-            query(name);
-        }
+        function query(name, dst) {
 
-        function query(name) {
-
-            $('#table').bootstrapTable("load", [{"title": "加载中......", "name": "加载中......", "url": "加载中......"}]);
-
-            fetch("http://ga.esrrhs.xyz/spider?name=" + name).then(function (response) {
+            fetch("127.0.0.1:8080/kindle?name=" + zip(name) + "&dst=" + zip(dst)).then(function (response) {
                 return response.json();
             }).then(function (json) {
                 var data = json["data"];
                 data = unzip(data)
                 var d = $.parseJSON(data);
-
-                if (d["info"] == null) {
-                    globalInfo = [];
-                    $('#table').bootstrapTable("load", []);
-                } else {
-                    globalInfo = d["info"];
-                    $('#table').bootstrapTable("load", d["info"]);
-                }
-
-                $("#total").text("链接数 : " + d["n"]);
+                $('#table').bootstrapTable("load", d["info"]);
+                $("#total").text("推送数 : " + d["n"]);
             });
         }
 
@@ -120,104 +105,38 @@
                 pageList: [5, 10, 20, 30],//可选择单页记录数
                 columns: [
                     {
-                        field: 'title',
-                        title: 'Title',
-                    },
-                    {
                         field: 'name',
                         title: 'Name',
-                    },
-                    {
-                        field: 'copy',
-                        title: '复制',
-                        events: copyEvents,
-                        formatter: copyFormatter
                     },
                     {
                         field: 'url',
                         title: 'Url',
                     },
                     {
-                        field: 'operate',
-                        title: '在线观看',
-                        events: operateEvents,
-                        formatter: operateFormatter
+                        field: 'mail',
+                        mail: 'Mail',
                     }
                 ]
             });
 
-            fetch("http://ga.esrrhs.xyz/spiderlast").then(function (response) {
+            fetch("http://127.0.0.1:8080/kindlehis").then(function (response) {
                 return response.json();
             }).then(function (json) {
                 var data = json["data"];
                 data = unzip(data)
                 var d = $.parseJSON(data);
-                globalInfo = d["info"];
                 $('#table').bootstrapTable("load", d["info"]);
-                $("#total").text("链接数 : " + d["n"]);
-
-                $("#lunbotu").empty();
-                $("#olnum").empty();
-
-                var imgd = d["hot"]
-                var nimgd = d["new"]
-                gundongtiao(imgd, nimgd)
+                $("#total").text("推送数 : " + d["n"]);
             });
 
             $("#cal").click(function () {
 
                 var name = $("#inputName").val()
-                query(name);
-            });
-            $("#inputName").keypress(function (event) {
-                var keycode = (event.keyCode ? event.keyCode : event.which);
-                if (keycode == '13') {
-                    event.preventDefault();
-                    var name = $("#inputName").val()
-                    query(name);
-                }
+                var dst = $("#inputDst").val()
+                query(name, dst);
             });
         });
-        window.operateEvents = {
-            'click .watch': function (e, value, row, index) {
-                var url = globalInfo[index]["url"];
-                if (url.toLowerCase().startsWith("http")) {
-                    window.open(url, "_blank");
-                } else {
-                    alert("不支持这种格式")
-                }
-            }
-        }
-
-        function operateFormatter(value, row, index) {
-            return [
-                '<button type="button" class="watch btn btn-default  btn-sm" style="margin-right:15px;">点击观看</button>']
-                .join('');
-        }
-
-        window.copyEvents = {
-            'click .copy': function (e, value, row, index) {
-                var textArea = document.createElement("textarea");
-                textArea.value = row.url;
-                // Avoid scrolling to bottom
-                textArea.style.top = "0";
-                textArea.style.left = "0";
-                textArea.style.position = "fixed";
-
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                alert("ok");
-            }
-        }
-
-        function copyFormatter(value, row, index) {
-            return [
-                '<button type="button" class="copy btn btn-default  btn-sm" style="margin-right:15px;">复制</button>']
-                .join('');
-        }
+        
     </script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -229,80 +148,39 @@
 <body>
 
 <div class="container" class="row">
-    <div class="col-sm-2 col-md-2 col-lg-2 col-md-push-80">
-        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" class="col-*-*">
-            <!-- Indicators -->
-            <ol class="carousel-indicators" id="olnum">
-                <!--填充到这里-->
-            </ol>
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner" role="listbox" id="lunbotu">
-                <!--填充到这里-->
-            </div>
-
-            <!-- Controls -->
-            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-    </div>
-    <div class="col-sm-8 col-md-8 col-lg-8">
+   
+    <div class="col-sm-16 col-md-16 col-lg-16">
         <form class="form-signin">
 
             <ul class="list-inline">
-                <li><h1 class="form-signin-heading">MOVIE搜索</h1></li>
+                <li><h1 class="form-signin-heading">Kindle推送</h1></li>
                 <li><span class="label label-default" id="total">条数</span></li>
             </ul>
 
             <ul class="list-inline">
-                <li><h2><span class="label label-default">输入</span></h2></li>
-                <li><label for="inputName" class="sr-only">输入</label>
-                    <input type="name" id="inputName" class="form-control" placeholder="输入搜索词 空格分割" value="" required
-                           autofocus>
+                <li><h2><span class="label label-default">网址</span></h2></li>
+                <li>
+                    <input type="name" id="inputName" class="form-control" placeholder="haodoo网址" value="" required >
                 </li>
             </ul>
+            <ul class="list-inline">
+                <li><h2><span class="label label-default">邮箱</span></h2></li>
+                <li>
+                    <input type="name" id="inputDst" class="form-control" placeholder="kindle邮箱" value="" required >
+                </li>
+            </ul>
+            
+            <button id="cal" type="button" class="btn btn-primary btn-lg btn-block">推送</button>
 
-            <button id="cal" type="button" class="btn btn-primary btn-lg btn-block">搜索</button>
-
-            <a onClick="return showName('綜藝大熱門');" style='color:blue'>綜藝大熱門</a>
-            <a onClick="return showName('綜藝玩很大');" style='color:blue'>綜藝玩很大</a>
-            <a onClick="return showName('小明星大跟班');" style='color:blue'>小明星大跟班</a>
         </form>
     </div>
 
-    <div class="col-sm-2 col-md-2 col-lg-2 col-md-pull-80">
-        <div id="carousel-example-generic1" class="carousel slide" data-ride="carousel" class="col-*-*">
-            <!-- Indicators -->
-            <ol class="carousel-indicators" id="olnum1">
-                <!--填充到这里-->
-            </ol>
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner" role="listbox" id="lunbotu1">
-                <!--填充到这里-->
-            </div>
-
-            <!-- Controls -->
-            <a class="left carousel-control" href="#carousel-example-generic1" role="button" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="right carousel-control" href="#carousel-example-generic1" role="button" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-    </div>
     <table class="table" id="table">
         <thead>
         <tr>
-            <th data-field="title" data-sortable="True">Title</th>
             <th data-field="name" data-sortable="True">Name</th>
             <th data-field="url">url</th>
+            <th data-field="mail" data-sortable="True">Mail</th>
         </tr>
         </thead>
     </table>
