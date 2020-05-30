@@ -81,7 +81,7 @@
 
         function query(name, dst) {
 
-            fetch("127.0.0.1:8080/kindle?name=" + zip(name) + "&dst=" + zip(dst)).then(function (response) {
+            fetch("http://ali.esrrhs.xyz/kindle?name=" + btoa(name) + "&dst=" + btoa(dst)).then(function (response) {
                 return response.json();
             }).then(function (json) {
                 var data = json["data"];
@@ -89,6 +89,7 @@
                 var d = $.parseJSON(data);
                 $('#table').bootstrapTable("load", d["info"]);
                 $("#total").text("推送数 : " + d["n"]);
+				alert("ok");
             });
         }
 
@@ -119,7 +120,7 @@
                 ]
             });
 
-            fetch("http://127.0.0.1:8080/kindlehis").then(function (response) {
+            fetch("http://ali.esrrhs.xyz/kindlehis").then(function (response) {
                 return response.json();
             }).then(function (json) {
                 var data = json["data"];
