@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>My first three.js app</title>
+    <title>Rolling the world</title>
     <style>
         body {
             margin: 0;
@@ -119,6 +119,9 @@
                 INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
                 INTERSECTED.material.emissive.setHex(0xff0000);
 
+				INTERSECTED.rotation.x += radius * Math.sin(THREE.MathUtils.degToRad(theta));
+				INTERSECTED.rotation.y += radius * Math.sin(THREE.MathUtils.degToRad(theta));
+				INTERSECTED.rotation.z += radius * Math.cos(THREE.MathUtils.degToRad(theta));
             }
 
         } else {
