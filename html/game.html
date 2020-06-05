@@ -38,11 +38,18 @@
         light.position.set(1, 1, 1).normalize();
         scene.add(light);
 
-        var geometry = new THREE.BoxBufferGeometry(20, 20, 20);
-
+		var geometry = [new THREE.BoxBufferGeometry(20, 20, 20),
+			new THREE.CircleBufferGeometry( 10, 32 ),
+			new THREE.ConeBufferGeometry( 5, 10, 32 ),
+			new THREE.CylinderBufferGeometry( 5, 5, 20, 32 ),
+			new THREE.OctahedronBufferGeometry( 10, 1 ),
+			new THREE.RingBufferGeometry( 1, 5, 32 ),
+			new THREE.TorusBufferGeometry( 10, 3, 16, 100 ),
+			new THREE.TorusKnotBufferGeometry( 10, 3, 100, 16 )];
+			
         for (var i = 0; i < 1500; i++) {
-
-            var object = new THREE.Mesh(geometry, new THREE.MeshLambertMaterial({color: Math.random() * 0xffffff}));
+		
+            var object = new THREE.Mesh(geometry[i%geometry.length], new THREE.MeshLambertMaterial({color: Math.random() * 0xffffff}));
 
             object.position.x = Math.random() * 800 - 400;
             object.position.y = Math.random() * 800 - 400;
