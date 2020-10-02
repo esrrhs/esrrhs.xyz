@@ -83,7 +83,7 @@
 
             $('#table').bootstrapTable("load", [{"infohash": "加载中......", "name": "加载中......"}]);
 
-            fetch("http://ga.esrrhs.xyz/dht?name=" + name).then(function (response) {
+            fetch("http://gq.esrrhs.xyz/dht?name=" + name).then(function (response) {
                 return response.json();
             }).then(function (json) {
                 var data = json["data"];
@@ -113,7 +113,7 @@
                 pageList: [5, 10, 20, 30],//可选择单页记录数
             });
 
-            fetch("http://ga.esrrhs.xyz/dhtlast").then(function (response) {
+            fetch("http://gq.esrrhs.xyz/dhtlast").then(function (response) {
                 return response.json();
             }).then(function (json) {
                 var data = json["data"];
