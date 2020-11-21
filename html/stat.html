@@ -48,6 +48,7 @@
 <button id="spidercrawl" type="button" class="btn btn-warning">Spider Crawl Data</button>
 <button id="btcrawl" type="button" class="btn btn-success">BT Crawl Data</button>
 <button id="switchcrawl" type="button" class="btn btn-danger">Switch Crawl Data</button>
+<button id="youtubecrawl" type="button" class="btn btn-danger">Youtube Transport Data</button>
 <script>
     function unzip(b64Data) {
         var strData = atob(b64Data);
@@ -162,6 +163,15 @@
     document.getElementById('switchcrawl').addEventListener('click', function () {
 
         fetch("http://ali.esrrhs.xyz/switchcj").then(function (response) {
+            return response.json();
+        }).then(function (json) {
+            show(json)
+        });
+    });
+	
+    document.getElementById('youtubecrawl').addEventListener('click', function () {
+
+        fetch("http://cf.esrrhs.xyz/youtubecj").then(function (response) {
             return response.json();
         }).then(function (json) {
             show(json)
