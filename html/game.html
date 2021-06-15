@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Rolling the world</title>
+    <title>gogogo</title>
     <style>
         body {
             margin: 0;
@@ -10,6 +10,7 @@
             display: block;
         }
     </style>
+	<meta charset="UTF-8">
 </head>
 <body>
 <script src="three.js"></script>
@@ -18,7 +19,10 @@
     var camera, scene, raycaster, renderer;
 
     var mouse = new THREE.Vector2(), INTERSECTED;
-    var radius = 100, theta = 0;
+    var radius = 100, theta = 0, goradius = 1;
+
+    var allobj = new Array();
+    var gsound;
 
     init();
     animate();
@@ -38,24 +42,26 @@
         light.position.set(1, 1, 1).normalize();
         scene.add(light);
 
-		var geometry = [new THREE.BoxBufferGeometry(20, 20, 20),
-			new THREE.CircleBufferGeometry( 10, 32 ),
-			new THREE.ConeBufferGeometry( 5, 10, 32 ),
-			new THREE.CylinderBufferGeometry( 5, 5, 20, 32 ),
-			new THREE.OctahedronBufferGeometry( 10, 1 ),
-			new THREE.RingBufferGeometry( 1, 5, 32 ),
-			new THREE.TorusBufferGeometry( 10, 3, 16, 100 ),
-			new THREE.TorusKnotBufferGeometry( 10, 3, 100, 16 )];
-			
-        for (var i = 0; i < 1500; i++) {
-		
-            var object = new THREE.Mesh(geometry[i%geometry.length], new THREE.MeshLambertMaterial({color: Math.random() * 0xffffff}));
+        var geometry = [new THREE.BoxBufferGeometry(20, 20, 20),
+            new THREE.CircleBufferGeometry(10, 32),
+            new THREE.ConeBufferGeometry(5, 10, 32),
+            new THREE.CylinderBufferGeometry(5, 5, 20, 32),
+            new THREE.OctahedronBufferGeometry(10, 1),
+            new THREE.RingBufferGeometry(1, 5, 32),
+            new THREE.TorusBufferGeometry(10, 3, 16, 100),
+            new THREE.TorusKnotBufferGeometry(10, 3, 100, 16)];
+
+        for (var i = 0; i < 1000; i++) {
+
+            var object = new THREE.Mesh(geometry[i % geometry.length], new THREE.MeshLambertMaterial({color: Math.random() * 0xffffff}));
 
             object.position.x = Math.random() * 800 - 400;
             object.position.y = Math.random() * 800 - 400;
             object.position.z = Math.random() * 800 - 400;
 
             scene.add(object);
+
+            allobj[i] = object;
         }
 
         raycaster = new THREE.Raycaster();
@@ -64,6 +70,36 @@
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
+
+        // create an AudioListener and add it to the camera
+        var listener = new THREE.AudioListener();
+        camera.add(listener);
+
+        // create a global audio source
+        var sound = new THREE.Audio(listener);
+
+        // add the audio object to the scene
+        scene.add(sound);
+
+        // load a sound and set it as the Audio object's buffer
+        var audioLoader = new THREE.AudioLoader();
+        audioLoader.load('music.mp3', function (buffer) {
+                sound.setBuffer(buffer);
+                sound.setLoop(false);
+                sound.setVolume(1.0);
+                gsound = sound;
+            },
+            // onProgress callback
+            function (xhr) {
+                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+            },
+
+            // onError callback
+            function (err) {
+                console.log('An error happened');
+            }
+        );
+
 
         document.addEventListener('mousemove', onDocumentMouseMove, false);
         window.addEventListener('resize', onWindowResize, false);
@@ -104,6 +140,19 @@
         camera.position.y = radius * Math.sin(THREE.MathUtils.degToRad(theta));
         camera.position.z = radius * Math.cos(THREE.MathUtils.degToRad(theta));
 
+        for (var i = 0; i < allobj.length; i++) {
+            var obj = allobj[i];
+            if (obj.act == true) {
+                obj.position.x += obj.plus.x;
+                obj.position.y += obj.plus.y;
+                obj.position.z += obj.plus.z;
+                obj.plus.n -= 1;
+                if (obj.plus.n < 0) {
+                    obj.act = false;
+                }
+            }
+        }
+
         camera.updateMatrixWorld();
 
         // find intersections
@@ -118,28 +167,18 @@
 
             //camera.focusAt(targetDistance); // using Cinematic camera focusAt method
 
-            if (INTERSECTED != intersects[0].object) {
+            var obj = intersects[0].object;
+            obj.plus = {};
+            obj.plus.x = goradius * Math.sin(THREE.MathUtils.degToRad(theta));
+            obj.plus.y = goradius * Math.sin(THREE.MathUtils.degToRad(theta));
+            obj.plus.z = goradius * Math.cos(THREE.MathUtils.degToRad(theta));
+            obj.plus.n = targetDistance;
+            obj.act = true;
 
-                if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
-
-                INTERSECTED = intersects[0].object;
-                INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
-                INTERSECTED.material.emissive.setHex(0xff0000);
-
-				INTERSECTED.rotation.x += radius * Math.sin(THREE.MathUtils.degToRad(theta));
-				INTERSECTED.rotation.y += radius * Math.sin(THREE.MathUtils.degToRad(theta));
-				INTERSECTED.rotation.z += radius * Math.cos(THREE.MathUtils.degToRad(theta));
+            if (gsound != null) {
+                gsound.play();
             }
-
-        } else {
-
-            if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
-
-            INTERSECTED = null;
-
         }
-
-        //
 
         scene.overrideMaterial = null;
 
