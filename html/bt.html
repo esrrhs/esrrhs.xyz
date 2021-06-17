@@ -52,6 +52,7 @@
     <script src="dist/js/bootstrap.min.js"></script>
     <script src="dist/js/bootstrap-table.min.js"></script>
     <script src="dist/js/bootstrap-table-zh-CN.min.js"></script>
+    <script src="aliencoder.js"></script>
     <style>
         .bootstrap-table .table thead > tr > th {
             min-width: 200px;
@@ -79,7 +80,20 @@
             return btoa(binaryString);
         }
 
+        function encrypt(info) {
+            for (var i = 0; i < info.length; i++) {
+                info[i]["infohash"] = ALIEN.encode(info[i]["infohash"]);
+                info[i]["name"] = ALIEN.encode(info[i]["name"]);
+            }
+            return info;
+        }
+
         function query(name) {
+            name = ALIEN.decode(name);
+            if (name == "") {
+                $('#table').bootstrapTable("load", []);
+                return;
+            }
 
             $('#table').bootstrapTable("load", [{"infohash": "加载中......", "name": "加载中......"}]);
 
@@ -120,7 +134,7 @@
                 data = unzip(data)
                 var d = $.parseJSON(data);
 
-                $('#table').bootstrapTable("load", d["info"]);
+                $('#table').bootstrapTable("load", encrypt(d["info"]));
                 $("#total").text("种子数 : " + d["n"]);
             });
 
