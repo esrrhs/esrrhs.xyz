@@ -32,7 +32,12 @@
 
 body {
     font-family: var(--font-main);
-    background-color: var(--bg-primary);
+    background-color: #0a0e17;
+    background-image: linear-gradient(rgba(10, 14, 23, 0.55), rgba(10, 14, 23, 0.72)), url('back.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
     color: var(--text-primary);
     line-height: 1.6;
     min-height: 100vh;
@@ -42,29 +47,9 @@ body {
     position: relative;
 }
 
-/* Subtle background glowing orbs */
-.bg-glow-1 {
-    position: fixed;
-    top: -100px;
-    left: 20%;
-    width: 600px;
-    height: 600px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(0,0,0,0) 70%);
-    pointer-events: none;
-    z-index: 0;
-}
-
-.bg-glow-2 {
-    position: fixed;
-    bottom: -150px;
-    right: 10%;
-    width: 700px;
-    height: 700px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, rgba(0,0,0,0) 70%);
-    pointer-events: none;
-    z-index: 0;
+/* Background glowing orbs disabled to show original back.jpg cleanly */
+.bg-glow-1, .bg-glow-2 {
+    display: none;
 }
 
 /* ==========================================================================
