@@ -1,250 +1,123 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+<script data-ad-client="ca-pub-5359391380212917" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-142060691-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'UA-142060691-1');
+</script>
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?08be2524e25f77c0fc3587ba24a3e252";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <title>开心每一天 - esrrhs.xyz</title>
-    <meta name="description" content="esrrhs 个人主页与技术空间，专注高性能网络系统、游戏 AI 与基础算法开源。">
+    <meta name="description" content="esrrhs 个人主页">
     <meta name="author" content="esrrhs">
     <link rel="icon" href="favicon.ico">
 
-    <!-- Modern Stylesheet -->
-    <link rel="stylesheet" href="style.css">
+    <title>开心每一天</title>
 
-    <!-- Google AdSense -->
-    <script data-ad-client="ca-pub-5359391380212917" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    
-    <!-- Google Analytics (UA-142060691-1) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142060691-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'UA-142060691-1');
-    </script>
-    
-    <!-- Baidu Analytics -->
-    <script>
-        var _hmt = _hmt || [];
-        (function() {
-            var hm = document.createElement("script");
-            hm.src = "https://hm.baidu.com/hm.js?08be2524e25f77c0fc3587ba24a3e252";
-            var s = document.getElementsByTagName("script")[0]; 
-            s.parentNode.insertBefore(hm, s);
-        })();
-    </script>
+    <!-- Bootstrap core CSS -->
+    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="sticky-footer-navbar.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]>
+    <script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 
 <body>
-    <!-- Navigation Header -->
-    <header class="header-nav">
-        <div class="nav-container">
-            <a class="brand" href="/">
-                <span class="brand-logo-icon">🌟</span>
-                <div class="brand-text">
-                    <span class="brand-title">开心每一天</span>
-                    <span class="brand-sub">esrrhs.xyz</span>
-                </div>
-            </a>
 
-            <div class="nav-right-group">
-                <ul class="nav-links">
-                    <li><a class="nav-link" href="https://esrrhs.blogspot.com/" target="_blank">📝 博客</a></li>
-                    <li><a class="nav-link" href="https://github.com/esrrhs" target="_blank">🐙 开源</a></li>
-                </ul>
+<!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://www.esrrhs.xyz">开心每一天</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="https://github.com/esrrhs" target="_blank">开源</a></li>
+            </ul>
 
-                <!-- 右上角在线项目下拉跳转选择框 (按要求实现) -->
-                <div class="dropdown-wrapper">
-                    <select id="projectSelect" class="project-select-box" onchange="onProjectSelectChange(this)" title="选择在线体验项目">
-                        <option value="" disabled selected>🕹️ 在线项目体验 ▾</option>
-                        <option value="http://majiang.esrrhs.xyz">🀄 麻将算法 (majiang.esrrhs.xyz)</option>
-                        <option value="https://github.com/esrrhs">🌟 更多开源 (GitHub)</option>
+            <!-- 右上角下拉框选项 (选择麻将算法跳转) -->
+            <form class="navbar-form navbar-right" style="margin-top: 8px;">
+                <div class="form-group">
+                    <select class="form-control" onchange="onProjectSelect(this)" title="选择项目跳转">
+                        <option value="" disabled selected>选择项目 ▾</option>
+                        <option value="http://majiang.esrrhs.xyz">麻将算法 (majiang.esrrhs.xyz)</option>
                     </select>
-                    <span class="dropdown-arrow">▼</span>
                 </div>
-            </div>
+            </form>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<!-- Begin page content -->
+<div class="container">
+    <div class="page-header">
+        <h1>Hi</h1>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div>Copyright &copy; esrrhs.xyz &nbsp;
+            <a href="https://beian.miit.gov.cn" target="_blank"> 京ICP备18029544号-1</a> &nbsp;
         </div>
-    </header>
+    </div>
+</footer>
 
-    <!-- Main Content -->
-    <main class="main-wrapper">
-        <!-- Hero Section -->
-        <section class="hero-section">
-            <div class="hero-badge">
-                <span>🚀</span> 专注高性能系统、架构与游戏 AI
-            </div>
-            <h1 class="hero-title">
-                探索极致性能与 <span>算法的艺术</span>
-            </h1>
-            <p class="hero-desc">
-                欢迎来到 esrrhs 的技术空间！这里汇集了游戏 AI 算法、高性能嵌入式脚本虚拟机与各类基础架构开源项目，开源共享，开心每一天。
-            </p>
-            <div class="hero-actions">
-                <a href="http://majiang.esrrhs.xyz" target="_blank" class="btn-primary-action">
-                    <span>🀄</span> 体验麻将算法网页对战
-                </a>
-                <a href="https://github.com/esrrhs" target="_blank" class="btn-secondary-action">
-                    <span>🐙</span> 访问 GitHub 开源空间
-                </a>
-            </div>
-        </section>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="dist/js/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="assets/js/ie10-viewport-bug-workaround.js"></script>
 
-        <!-- Featured Projects Section -->
-        <section class="projects-section">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <span>⚡</span> 精选项目 & 网页体验
-                </h2>
-                <span class="section-sub">可在右上角随时快速切换在线项目</span>
-            </div>
-
-            <div class="projects-grid">
-                <!-- 重点高亮：麻将算法在线对战平台 -->
-                <div class="project-card highlight">
-                    <div class="card-top">
-                        <div class="card-header-row">
-                            <span class="card-icon">🀄</span>
-                            <span class="card-badge badge-live">● 在线体验可用</span>
-                        </div>
-                        <h3 class="card-title">majiang_algorithm (麻将算法平台)</h3>
-                        <p class="card-desc">
-                            基于查表法的高性能麻将毫秒级胡牌、听牌检测与 AI 出牌决策算法，支持任意鬼牌（癞子）。已集成仿腾讯麻将风的 4 人全自动/人机对战网页平台与毫秒级算法实验室！
-                        </p>
-                    </div>
-                    <div>
-                        <div class="card-tags">
-                            <span class="tag-pill">Java</span>
-                            <span class="tag-pill">查表算法</span>
-                            <span class="tag-pill">4人在线对战</span>
-                            <span class="tag-pill">AI推荐</span>
-                            <span class="tag-pill">多鬼牌支持</span>
-                        </div>
-                        <div class="card-actions">
-                            <a href="http://majiang.esrrhs.xyz" target="_blank" class="card-btn btn-card-primary">
-                                🚀 立即进入对战 (majiang.esrrhs.xyz)
-                            </a>
-                            <a href="https://github.com/esrrhs/majiang_algorithm" target="_blank" class="card-btn btn-card-sub">
-                                GitHub
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- doudizhu_ai -->
-                <div class="project-card">
-                    <div class="card-top">
-                        <div class="card-header-row">
-                            <span class="card-icon">🃏</span>
-                            <span class="card-badge badge-algo">棋牌算法</span>
-                        </div>
-                        <h3 class="card-title">doudizhu_ai</h3>
-                        <p class="card-desc">
-                            斗地主智能出牌决策算法与博弈评估模型，支持单机模拟对弈、残局求解与出牌胜率评估，为卡牌策略游戏提供高水平 AI 决策支持。
-                        </p>
-                    </div>
-                    <div>
-                        <div class="card-tags">
-                            <span class="tag-pill">Java</span>
-                            <span class="tag-pill">斗地主</span>
-                            <span class="tag-pill">博弈算法</span>
-                            <span class="tag-pill">AI决策</span>
-                        </div>
-                        <div class="card-actions">
-                            <a href="https://github.com/esrrhs/doudizhu_ai" target="_blank" class="card-btn btn-card-sub">
-                                了解详情 (GitHub)
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- fLua -->
-                <div class="project-card">
-                    <div class="card-top">
-                        <div class="card-header-row">
-                            <span class="card-icon">⚡</span>
-                            <span class="card-badge badge-stars">轻量脚本引擎</span>
-                        </div>
-                        <h3 class="card-title">fLua (fakelua)</h3>
-                        <p class="card-desc">
-                            专为游戏和嵌入式环境设计的轻量级高性能脚本与虚拟机引擎，专注极致低开销、紧凑内存占用与高执行效率。
-                        </p>
-                    </div>
-                    <div>
-                        <div class="card-tags">
-                            <span class="tag-pill">C++</span>
-                            <span class="tag-pill">Lua引擎</span>
-                            <span class="tag-pill">脚本系统</span>
-                            <span class="tag-pill">嵌入式</span>
-                        </div>
-                        <div class="card-actions">
-                            <a href="https://github.com/esrrhs/fLua" target="_blank" class="card-btn btn-card-sub">
-                                了解详情 (GitHub)
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- gohome -->
-                <div class="project-card">
-                    <div class="card-top">
-                        <div class="card-header-row">
-                            <span class="card-icon">🏠</span>
-                            <span class="card-badge badge-algo">智能生活</span>
-                        </div>
-                        <h3 class="card-title">gohome</h3>
-                        <p class="card-desc">
-                            基于 Go 语言构建的轻量家庭自动化与设备管理系统，支持多端状态汇聚、定时控制与智能生活设备联动。
-                        </p>
-                    </div>
-                    <div>
-                        <div class="card-tags">
-                            <span class="tag-pill">Go</span>
-                            <span class="tag-pill">智能家居</span>
-                            <span class="tag-pill">自动化管理</span>
-                        </div>
-                        <div class="card-actions">
-                            <a href="https://github.com/esrrhs/gohome" target="_blank" class="card-btn btn-card-sub">
-                                了解详情 (GitHub)
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="site-footer">
-        <div class="footer-container">
-            <div class="footer-left">
-                <span>Copyright &copy; <span id="currentYear"></span> esrrhs.xyz</span>
-                <span>·</span>
-                <a class="footer-link footer-beian" href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer">
-                    🛡️ 京ICP备18029544号-1
-                </a>
-            </div>
-            <div class="footer-right">
-                <a class="footer-link" href="https://github.com/esrrhs" target="_blank">GitHub</a> &nbsp;·&nbsp;
-                <a class="footer-link" href="https://esrrhs.blogspot.com/" target="_blank">Blog</a> &nbsp;·&nbsp;
-                <a class="footer-link" href="http://majiang.esrrhs.xyz" target="_blank">Majiang Online</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Interactive script for dropdown navigation -->
-    <script>
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
-
-        function onProjectSelectChange(selectEl) {
-            const url = selectEl.value;
-            if (url) {
-                window.open(url, '_blank');
-                // 重置选择框为默认提示，以便下次可重复选同一个
-                selectEl.selectedIndex = 0;
-            }
-        }
-    </script>
+<script>
+function onProjectSelect(selectEl) {
+    if (selectEl.value) {
+        window.open(selectEl.value, '_blank');
+        selectEl.selectedIndex = 0;
+    }
+}
+</script>
 </body>
 </html>
